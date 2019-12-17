@@ -10,13 +10,13 @@ logger = logging.getLogger()
 
 def save_most_rt(tweet, mostRT):
     try:
-        logger.info(f"Processing tweet id {tweet.id}\n")
+        #logger.info(f"Processing tweet id {tweet.id}\n")
 
         current_RTs  = tweet.retweet_count
-        logger.info(f"Currently scanned tweet's RT count...{current_RTs}")    
+        #logger.info(f"Currently scanned tweet's RT count...{current_RTs}")    
 
         mostRT_count = mostRT.retweet_count
-        logger.info(f"Highest RT count saved...{mostRT_count}\n")  
+        #logger.info(f"Highest RT count saved...{mostRT_count}\n")  
     except:
         logger.error("Error on getting RT count", exc_info=True)
     
