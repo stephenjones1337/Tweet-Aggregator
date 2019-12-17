@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <title>Tweet Aggregator</title>
+    <meta name="twitter:every_exception" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link rel="stylesheet" href="/static/styles.css">
+    <!-- <script sync src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!--fade in on load-->
+    <script> 
+        $(window).on('load', function(){
+            $('.cover').fadeOut(500);
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $(this).scrollTop(0);
+        });</script>
+    <!--widgets from twitter-->
+    <script>window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+      
+        return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+    <!--pipe data to python-->
+    <script>
+        // Get data
+        fetch('/json')
+        //promise
+        .then(function (response) {
+            return response.text();
+        }).then(function (text) {
+            console.log('GET response text:');
+            ///get tweet IDs here, feed to create_tweet()
+            console.log(text); // Print the greeting as text
+            
+            //embed tweets
+            text = text.slice(1,-1);
+            text_list = text.split(',');
+            for (let index = 0; index < text_list.length; index++) {
+                text_list[index] = text_list[index].trim();
+                console.log(text_list[index]);      
+            }            
+        
+            twttr.widgets.createTweet(
+                text_list[0],
+                document.getElementById('tweet1'));
+            twttr.widgets.createTweet(
+                text_list[1],
+                document.getElementById('tweet2'));
+        });   
+    </script>
+
+
+</head>
+
+
+<body>
+    <div class="top_background" id="top">
+        <section class="welcome">
+            <header>
+                <!--twitter icon-->
+                <img src="https://img.icons8.com/color/480/000000/twitter.png">
+                <h1>Tweet Aggregator</h1>
+            </header>
+        </section>
+    </div>
+    <!-- bar -->
+    <ul class="nav">
+        <li><a href="#top">Top</a></li>
+        <li><a href="#bottom">Bottom</a></li>
+    </ul>
+    <section class="timeline-holder">
+        <blockquote class="timeline" id="guts">    
+        <a class="twitter-timeline" height="1000px"
+        href="https://twitter.com/Every_Exception?ref_src=twsrc%5Etfw"></a>
+        </blockquote>
+    </section>
+    <section class="top_tweets">
+        <h1>Top Tweets</h1>
+        <blockquote class="twitter-tweet tw-align-center" id="tweet1"><p>Most Favorited</p></blockquote>
+        <blockquote class="twitter-tweet tw-align-center" id="tweet2"><p>Most Retweeted</p></blockquote>
+    </section>
+</body>
+
+<div class="cover" id="bottom"></div>
+</html>
