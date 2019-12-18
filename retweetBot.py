@@ -38,4 +38,4 @@ def stream(keywords):
     stream.filter(track=keywords, languages=["en"], is_async=True)
 
 if __name__ == "__main__":
-    stream(["#100daysofcode"])
+    stream(my_filter())

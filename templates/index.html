@@ -7,6 +7,7 @@
     <!-- <script sync src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/animation.js"></script>
     <!--fade in on load-->
     <script> 
         $(window).on('load', function(){
@@ -16,13 +17,15 @@
     <script>
         $(document).ready(function(){
             $(this).scrollTop(0);
-        });</script>
+        });
+    </script>
     <!--widgets from twitter-->
-    <script>window.twttr = (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0],
+    <script>
+        window.twttr = (function(document, string, id) {
+        var js, fjs = document.getElementsByTagName(string)[0],
           t = window.twttr || {};
-        if (d.getElementById(id)) return t;
-        js = d.createElement(s);
+        if (document.getElementById(id)) return t;
+        js = document.createElement(string);
         js.id = id;
         js.src = "https://platform.twitter.com/widgets.js";
         fjs.parentNode.insertBefore(js, fjs);
@@ -30,8 +33,7 @@
         t._e = [];
         t.ready = function(f) {
           t._e.push(f);
-        };
-      
+        };      
         return t;
       }(document, "script", "twitter-wjs"));
     </script>
@@ -45,16 +47,16 @@
         }).then(function (text) {
             console.log('GET response text:');
             ///get tweet IDs here, feed to create_tweet()
-            console.log(text); // Print the greeting as text
+            console.log(text);
             
-            //embed tweets
+            //dress text, store to array
             text = text.slice(1,-1);
             text_list = text.split(',');
             for (let index = 0; index < text_list.length; index++) {
                 text_list[index] = text_list[index].trim();
                 console.log(text_list[index]);      
             }            
-        
+            //embed tweets
             twttr.widgets.createTweet(
                 text_list[0],
                 document.getElementById('tweet1'));
@@ -63,10 +65,7 @@
                 document.getElementById('tweet2'));
         });   
     </script>
-
-
 </head>
-
 
 <body>
     <div class="top_background" id="top">
@@ -79,10 +78,18 @@
         </section>
     </div>
     <!-- bar -->
-    <ul class="nav">
-        <li><a href="#top">Top</a></li>
-        <li><a href="#bottom">Bottom</a></li>
-    </ul>
+    <div class="nav-container">
+        <nav>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a class="nav-link" href="#top">Top</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#bottom">Bottom</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     <section class="timeline-holder">
         <blockquote class="timeline" id="guts">    
         <a class="twitter-timeline" height="1000px"
@@ -96,5 +103,6 @@
     </section>
 </body>
 
-<div class="cover" id="bottom"></div>
+<div class="cover"></div>
+<div id="bottom"></div>
 </html>

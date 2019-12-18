@@ -6,8 +6,8 @@ from   config       import create_api
 
 
 def init_fav():
-    mostFav = tweepy.Status
-    return mostFav
+    #cannot assign retweet_status to base status
+    return tweepy.Status
 
 def init_retweet():
     mostRT = tweepy.Status
@@ -21,6 +21,6 @@ def get_tweets():
 
     #get tweet ids
     tweet_id_collection = scan_returnfav_rt(api, mostFav, mostRT)
+    print(tweet_id_collection)
     #convert to json and return
     return json.dumps(tweet_id_collection)
-    #end while

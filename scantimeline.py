@@ -12,7 +12,7 @@ def scan_returnfav_rt(api, mostFav, mostRT):
     #itterate over tweets w/out dealing with pages
     for tweet in tweepy.Cursor(api.user_timeline, 
             screen_name="@every_exception",
-            tweet_mode="extended").items(300):
+            tweet_mode="extended").items(3):
 
         logger.info(f"Checking tweet ID...{tweet.id}")
 
@@ -29,5 +29,5 @@ def scan_returnfav_rt(api, mostFav, mostRT):
                 continue
             mostFav = save_most_fav(tweet, mostFav)
             mostRT  = save_most_rt(tweet, mostRT)
-    
+    #return core tweet id
     return mostFav.retweeted_status.id, mostRT.retweeted_status.id
